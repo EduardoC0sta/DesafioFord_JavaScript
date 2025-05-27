@@ -10,7 +10,6 @@ class CarouselItem {
     }
 }
 
-//Classe do Carrosel
 class Carousel {
     static _arr = [];
     static _sequence = 0;
@@ -31,18 +30,29 @@ class Carousel {
 
     static Next() {
         if (Carousel._size === 0) return;
-    
+
         const item = Carousel._arr[Carousel._sequence];
         if (!item) return;
-    
+
         const carouselDiv = document.getElementById('carousel');
         const titleDiv = document.getElementById('carousel-title');
-    
+
         if (carouselDiv && titleDiv) {
             carouselDiv.innerHTML = `<a href="${item.link}"><img src="${item.img}" alt="${item.title}" class="active"></a>`;
             titleDiv.innerText = item.title;
         }
-    
+
         Carousel._sequence = (Carousel._sequence + 1) % Carousel._size;
+    }
+
+    static GoTo(index) {
+        if (index < 0 || index >= Carousel._size) return;
+
+        clearInterval(Carousel._interval); // Para rotação automática
+        Carousel._sequence = index;
+        Carousel.Next(); // Mostra slide atual
+
+        // Reinicia a rotação automática
+        Carousel._interval = setInterval(function () { Carousel.Next(); }, 2500);
     }
 }
