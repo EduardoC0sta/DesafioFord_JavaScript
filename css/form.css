@@ -49,6 +49,10 @@ button {
     float: right;
 }
 
+button:hover {
+    transform: scale(1.2);
+}
+
 .titulo {
     margin-left: 8px;
 }
